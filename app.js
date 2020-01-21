@@ -16,6 +16,7 @@ const mainTemplate = require("./templates/mainTemplate");
 const fs = require("fs");
 
 
+
 //test package
 const jest = require('jest');
 
@@ -28,8 +29,8 @@ let answers = {
 
 let questions = [{
     type: "input",
-    message: "What is your name?",
     name: "name",
+    message: "What is your name?",
 }, {
     type: "list", 
     name: "role",
@@ -43,29 +44,88 @@ let questions = [{
     type: "input", 
     name: "id",
     message: "What is your id?",
-}, {
+}]
+
+let officeNumber = {
     type: "input",
     name: "officeNumber",
-    message: "What is your office number?"
-}, {
+    message: "What is your office number?",
+}
+
+let school = {
+    type: "input", 
+    name: "school", 
+    message: "What school do you attend?",
+}
+
+let gitHub = {
+    type: "input", 
+    name: "gitHub", 
+    message: "What is your Github username?",
+}
+
+let repeated ={
     type: "checkbox", 
     name: "continue", 
     message: "Would you like to enter another teammate?",
     choices: ["yes", "no"]
 }
-]
 
-function promptUser() {
-    inquirer.prompt(questions).then(function (response)
+
+function employees() {
+    inquirer.prompt(questions).then(function(response)
         {
-            let path = role;
-            switch(path){
-                case "manager": 
-                case "intern" :
-                case "engineer": 
-                    return renderHTML(path + ".html", res);
-                default:
-                    return renderHTML("main.html");
+            data = response 
+            if (data.role == "manager"){ 
+                    inquirer.prompt(officeNumber).then(function(response) {
+                        let person = new manager(data.name, data.id, data.email, data.officeNumber)
+                        answers.manager.push(person)
+                        repeat();
+                    }) 
+                } else if (data.role == "intern"){
+                    inquirer.prompt(school).then(function (response){
+                        let person = new intern(data.name, data.id, data.email, data.school)
+                        answers.intern.push(person)
+                        repeat();
+                    })
+                } else if (data.role == "engineer"){ 
+                    inquirer.prompt(gitHub).then(function (response){
+                        let person = new engineer(data.name, data.id, data.email, data.gitHub)
+                        answers.intern.push(person)
+                        repeat();
+                    })
             } 
         }
-    )}
+    )};
+
+    function repeat() {
+        inquirer.prompt(repeated).then(function (data) {
+            if (data.yes) {
+                employees();
+            } else {
+                html(answers);
+            }
+        })
+    }
+
+    function html(answers) {
+        let cards = ""
+        answers.manager.forEach(element => {
+            cards += managerTemplate(element)
+        });
+        answers.engineer.forEach(element => {
+            cards += engineerTemplate(element)
+        });
+        answers.intern.forEach(element => {
+            cards += internTemplate(element)
+        });
+        fs.writeFile("./output/team.html", html(cards), function (err) {
+            if (err) {
+                return console.log(err);
+            } else {
+                console.log ("You did it!")
+            }
+        });
+    }
+
+    employees();

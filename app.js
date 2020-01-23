@@ -33,26 +33,28 @@ let questions = [{
     message: "What is your id?"
 }]
 
+//question for manager
 let officeNumber = {
     type: "input",
     name: "officeNumber",
     message: "What is your office number?"
 }
-
+//question for intern
 let school = {
     type: "input", 
     name: "school", 
     message: "What school do you attend?"
 }
-
+//question for engineer
 let GitHubUser = {
     type: "input", 
     name: "GitHubUser", 
     message: "What is your Github username?",
 }
 
+//repeat the questions until all members are added
 let repeated ={
-    type: "checkbox", 
+    type: "list", 
     name: "continue", 
     message: "Would you like to enter another teammate?",
     choices: ["yes", "no"],
@@ -70,6 +72,7 @@ let answers = {
 function employees() {
     inquirer.prompt(questions).then(function(response)
         {
+            //if the user selects manager 
             teammate = response 
             if  (teammate.role == "manager"){ 
                     inquirer.prompt(officeNumber).then(function(response) {
@@ -77,14 +80,14 @@ function employees() {
                         let person = new manager(teammate.name,  teammate.id, teammate.email,   teammate.officeNumber)
                         answers.manager.push(person)
                         repeat();
-                    }) 
+                    }) //if the user selects intern
                 } else if (teammate.role == "intern"){
                     inquirer.prompt(school).then(function (response){
                         teammate.school = response.school
                         let person = new intern(teammate.name,   teammate.id, teammate.email, teammate.school)
                         answers.intern.push(person)
                         repeat();
-                    })
+                    })//if the user selects engineer 
                 } else if (teammate.role == "engineer"){ 
                     inquirer.prompt(GitHubUser).then(function (response){
                         teammate.GitHubUser = response.GitHubUser
@@ -95,7 +98,7 @@ function employees() {
             } 
         }
     )};
-
+//repeats the questions for each new teammate until the person selects no
     function repeat() {
         inquirer.prompt(repeated).then(function (response) {
             if (response.continue == "yes") {
@@ -105,7 +108,7 @@ function employees() {
             }
         })
     }
-
+//creates the cards with the answers to append to the html page
     function html(answers) {
         let cards = ""
         answers.manager.forEach(element => {

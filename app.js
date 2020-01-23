@@ -70,25 +70,25 @@ let answers = {
 function employees() {
     inquirer.prompt(questions).then(function(response)
         {
-            obj = response 
-            if  (obj.role == "manager"){ 
+            teammate = response 
+            if  (teammate.role == "manager"){ 
                     inquirer.prompt(officeNumber).then(function(response) {
-                        obj.officeNumber = response.officeNumber
-                        let person = new manager(obj.name,  obj.id, obj.email,   obj.officeNumber)
+                        teammate.officeNumber = response.officeNumber
+                        let person = new manager(teammate.name,  teammate.id, teammate.email,   teammate.officeNumber)
                         answers.manager.push(person)
                         repeat();
                     }) 
-                } else if (obj.role == "intern"){
+                } else if (teammate.role == "intern"){
                     inquirer.prompt(school).then(function (response){
-                        obj.school = response.school
-                        let person = new intern(obj.name,   obj.id, obj.email, obj.school)
+                        teammate.school = response.school
+                        let person = new intern(teammate.name,   teammate.id, teammate.email, teammate.school)
                         answers.intern.push(person)
                         repeat();
                     })
-                } else if (obj.role == "engineer"){ 
+                } else if (teammate.role == "engineer"){ 
                     inquirer.prompt(GitHubUser).then(function (response){
-                        obj.GitHubUser = response.GitHubUser
-                        let person = new engineer(obj.name, obj.id, obj.email, obj.GitHubUser)
+                        teammate.GitHubUser = response.GitHubUser
+                        let person = new engineer(teammate.name, teammate.id, teammate.email, teammate.GitHubUser)
                         answers.engineer.push(person)
                         repeat();
                     })

@@ -4,7 +4,7 @@
 This application takes the user input to build a Node CLI to generate an HTML webpage that displays summaries for each member of their team. 
 
 ## Getting Started 
-Node packages: inquirer, fs 
+Install node packages inquirer and fs 
 
 ## Running Test 
 Test folder included in the code 

@@ -15,7 +15,7 @@ function engineerTemplate (data){
                 <td>Email: ${data.getEmail()}</td>
             </tr>
             <tr>
-                <td>Github: ${data.getGithubUser()}</td>
+                <td>Github: ${data.getGitHubUser()}</td>
             </tr>
         </table>
     </div>

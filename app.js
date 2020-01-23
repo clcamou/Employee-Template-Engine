@@ -87,7 +87,7 @@ function employees() {
                     })
                 } else if (obj.role == "engineer"){ 
                     inquirer.prompt(GitHubUser).then(function (response){
-                        obj.gitHub = response.GitHubUser
+                        obj.GitHubUser = response.GitHubUser
                         let person = new engineer(obj.name, obj.id, obj.email, obj.GitHubUser)
                         answers.engineer.push(person)
                         repeat();

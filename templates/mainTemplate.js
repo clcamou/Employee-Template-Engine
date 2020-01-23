@@ -21,7 +21,7 @@ function mainTemplate(data){
             header {
                 height: 15vh;
                 text-align: center;
-                background-color: turquoise;
+                background-color: #0077f7;
                 color: white;
                 padding: 0;
                 margin: 0;

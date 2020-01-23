@@ -1,6 +1,4 @@
-function mainTemplate(data){
-
-    return    `<!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -91,11 +89,27 @@ function mainTemplate(data){
             <h1>My Team</h1>
         </header>
         <div class="conatainer">
-            ${data}
+            <div class="card">
+    <div class="cardheader">
+        <h2>chrisitne</h2>
+        <h2><i class="fas fa-mug-hot"></i>Manager</h2>
+    </div>
+    <div class="cardbody">
+        <table>
+            <tr>
+                <td>ID: 1</td>
+            </tr>
+            <tr>
+                <td>Email: clcamou@asu.edu</td>
+            </tr>
+            <tr>
+                <td>Office Number: 1</td>
+            </tr>
+        </table>
+    </div>
+</div>
         </div>
     
     </body>
     
-    </html>`
-    }
-    module.exports = mainTemplate;
+    </html>

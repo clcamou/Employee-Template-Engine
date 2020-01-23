@@ -13,7 +13,7 @@ function internTemplate (data){
                 <td>ID: ${data.getId()}</td>
             </tr>
             <tr>
-                <td>Email: <a href="mailto:${data.getEmail()}">${data.getEmail()}</a></td>
+                <td>Email: ${data.getEmail()}</td>
             </tr>
             <tr>
                 <td>School: ${data.getSchool()}</td>

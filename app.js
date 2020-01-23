@@ -3,64 +3,51 @@ const inquirer = require("inquirer");
 const manager = require("./lib/manager");
 const engineer = require("./lib/engineer");
 const intern = require("./lib/intern");
-const employee = require("./lib/employee");
 
+//to call on the templates 
 const managerTemplate = require("./templates/managerTemplate");
-
 const engineerTemplate = require("./templates/engineerTemplate");
-
 const internTemplate = require("./templates/internTemplate");
-
 const mainTemplate = require("./templates/mainTemplate");
 
-const fs = require("fs");
+// to call on the file system
+const fs = require("fs")
 
-
-
-//test package
-const jest = require('jest');
-
-//create answers 
-let answers = {
-    manager: [],
-    engineer: [],
-    intern: [],
-}
-
+//Create questions to be asked
 let questions = [{
     type: "input",
     name: "name",
-    message: "What is your name?",
+    message: "What is your name?"
 }, {
     type: "list", 
     name: "role",
     message: "What role do you play in the company?",
-    choices: ["manager", "engineer","intern"], 
+    choices: ["manager", "engineer","intern"] 
 }, {
     type: "input", 
     name: "email",
-    message: "What is your email?",
+    message: "What is your email?"
 }, {
     type: "input", 
     name: "id",
-    message: "What is your id?",
+    message: "What is your id?"
 }]
 
 let officeNumber = {
     type: "input",
     name: "officeNumber",
-    message: "What is your office number?",
+    message: "What is your office number?"
 }
 
 let school = {
     type: "input", 
     name: "school", 
-    message: "What school do you attend?",
+    message: "What school do you attend?"
 }
 
-let gitHub = {
+let GitHubUser = {
     type: "input", 
-    name: "gitHub", 
+    name: "GitHubUser", 
     message: "What is your Github username?",
 }
 
@@ -68,30 +55,41 @@ let repeated ={
     type: "checkbox", 
     name: "continue", 
     message: "Would you like to enter another teammate?",
-    choices: ["yes", "no"]
+    choices: ["yes", "no"],
+}
+
+//create answers object 
+let answers = {
+    manager: [],
+    engineer: [],
+    intern: []
 }
 
 
+//prompt user to collect information from the user 
 function employees() {
     inquirer.prompt(questions).then(function(response)
         {
-            data = response 
-            if (data.role == "manager"){ 
+            obj = response 
+            if  (obj.role == "manager"){ 
                     inquirer.prompt(officeNumber).then(function(response) {
-                        let person = new manager(data.name, data.id, data.email, data.officeNumber)
+                        obj.officeNumber = response.officeNumber
+                        let person = new manager(obj.name,  obj.id, obj.email,   obj.officeNumber)
                         answers.manager.push(person)
                         repeat();
                     }) 
-                } else if (data.role == "intern"){
+                } else if (obj.role == "intern"){
                     inquirer.prompt(school).then(function (response){
-                        let person = new intern(data.name, data.id, data.email, data.school)
+                        obj.school = response.school
+                        let person = new intern(obj.name,   obj.id, obj.email, obj.school)
                         answers.intern.push(person)
                         repeat();
                     })
-                } else if (data.role == "engineer"){ 
-                    inquirer.prompt(gitHub).then(function (response){
-                        let person = new engineer(data.name, data.id, data.email, data.gitHub)
-                        answers.intern.push(person)
+                } else if (obj.role == "engineer"){ 
+                    inquirer.prompt(GitHubUser).then(function (response){
+                        obj.gitHub = response.GitHubUser
+                        let person = new engineer(obj.name, obj.id, obj.email, obj.GitHubUser)
+                        answers.engineer.push(person)
                         repeat();
                     })
             } 
@@ -99,8 +97,8 @@ function employees() {
     )};
 
     function repeat() {
-        inquirer.prompt(repeated).then(function (data) {
-            if (data.yes) {
+        inquirer.prompt(repeated).then(function (response) {
+            if (response.continue == "yes") {
                 employees();
             } else {
                 html(answers);
@@ -113,13 +111,13 @@ function employees() {
         answers.manager.forEach(element => {
             cards += managerTemplate(element)
         });
-        answers.engineer.forEach(element => {
-            cards += engineerTemplate(element)
-        });
         answers.intern.forEach(element => {
             cards += internTemplate(element)
         });
-        fs.writeFile("./output/team.html", html(cards), function (err) {
+        answers.engineer.forEach(element => {
+            cards += engineerTemplate(element)
+        });
+        fs.writeFile("./output/index.html", mainTemplate(cards), function (err) {
             if (err) {
                 return console.log(err);
             } else {

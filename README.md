@@ -9,7 +9,7 @@ Install node packages inquirer and fs
 ## Running Test 
 
 ## Demo 
-
+[Recording of Employee Template Engine](demo/demo.gif)
 
 
 ## Built With 
@@ -25,3 +25,4 @@ Christine Camou
 ## Links 
 1. https://clcamou.github.io/Employee-Template-Engine/
 2. https://github.com/clcamou/Employee-Template-Engine
+3. 
